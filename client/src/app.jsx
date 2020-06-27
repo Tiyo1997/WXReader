@@ -1,4 +1,5 @@
 import Taro, { Component } from '@tarojs/taro'
+import 'taro-ui/dist/style/index.scss'
 import Index from './pages/index'
 
 import './app.less'
@@ -11,24 +12,46 @@ import './app.less'
 
 class App extends Component {
 
-  config = {
-    pages: [
-      'pages/index/index'
-    ],
-    window: {
-      backgroundTextStyle: 'light',
-      navigationBarBackgroundColor: '#fff',
-      navigationBarTitleText: 'WeChat',
-      navigationBarTextStyle: 'black'
-    },
-    cloud: true
-  }
-
   componentDidMount () {
     if (process.env.TARO_ENV === 'weapp') {
       Taro.cloud.init()
     }
   }
+
+  config = {
+    pages: [
+      'pages/index/index',
+      'pages/bookMall/bookMall',
+      'pages/videoCenter/videoCenter',
+    ],
+    window: {
+      backgroundTextStyle: 'light',
+      navigationBarBackgroundColor: '#fff',
+      navigationBarTitleText: '微信读书',
+      navigationBarTextStyle: 'black'
+    },
+    tabBar: {
+      list: [{
+        pagePath: 'pages/bookMall/bookMall',
+        text: '福 利',
+        iconPath: 'res/icon/fuli.png',
+        selectedIconPath: 'res/icon/_fuli.png'
+      },{
+        pagePath: 'pages/index/index',
+        text: '书 城',
+        iconPath: 'res/icon/shucheng.png',
+        selectedIconPath: 'res/icon/_shucheng.png'
+      },{
+        pagePath: 'pages/videoCenter/videoCenter',
+        text: '视 频',
+        iconPath: 'res/icon/vid.png',
+        selectedIconPath: 'res/icon/_vid.png'
+      }],
+      selectedColor: '#1296db'
+    },
+    cloud: true
+  }
+
 
   componentDidShow () {}
 

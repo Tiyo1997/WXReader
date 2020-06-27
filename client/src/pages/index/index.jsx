@@ -1,29 +1,50 @@
 import Taro, { Component } from '@tarojs/taro'
-import { View, Text } from '@tarojs/components'
+import { AtSearchBar } from 'taro-ui'
+import { View } from '@tarojs/components'
 import './index.less'
-
-import Login from '../../components/login/index'
 
 export default class Index extends Component {
 
-  config = {
-    navigationBarTitleText: '首页'
+  constructor() {
+    super(...arguments)
+    this.state = {
+      value: '',
+      bookList: []
+    }
   }
 
-  componentWillMount () { }
+  async componentDidMount() {
+    Taro.request({
+      url: 'https://example.com/ajax?dataType=reader',
+      dataType: 'json',
+      success: res => {
+        this.setState({ bookList: res.data.bookList });
+      }
+    })
+  }
 
-  componentDidMount () { }
+  onChange(value) {
+    this.setState({
+      value: value
+    })
+  }
 
-  componentWillUnmount () { }
+  onActionClick() {
+    console.log('开始搜索')
+  }
 
-  componentDidShow () { }
 
-  componentDidHide () { }
 
-  render () {
+  render() {
+    const { bookList } = this.state;
+    console.log(bookList);
     return (
-      <View className='index'>
-        <Login/>
+      <View className='wrapper'>
+        <AtSearchBar
+          value={this.state.value}
+          onChange={this.onChange.bind(this)}
+          onActionClick={this.onActionClick.bind(this)}
+        />
       </View>
     )
   }
